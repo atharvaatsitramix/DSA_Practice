@@ -62,4 +62,79 @@ func maxSumSubarray(arr []int, k int) int {
 }
 ```
 
+### Merge Intervals Algorithm
+
+The merge intervals algorithm is used to merge overlapping intervals in a given collection. This algorithm is essential for solving scheduling problems and optimizing interval-based operations.
+
+#### How the Merge Intervals Function Works:
+
+**1. Problem Definition:**
+- **Input**: A collection of intervals represented as `[][]int` where each sub-array represents an interval `[start, end]`
+- **Output**: A collection of non-overlapping intervals after merging all overlapping ones
+- **Goal**: Consolidate overlapping intervals to minimize the total number of intervals
+
+**2. Algorithm Steps:**
+
+```go
+func mergeIntervals(intervals [][]int) [][]int {
+    // Step 1: Handle edge cases
+    if len(intervals) <= 1 {
+        return intervals
+    }
+
+    // Step 2: Sort intervals by start time
+    sort.Slice(intervals, func(i, j int) bool {
+        return intervals[i][0] < intervals[j][0]
+    })
+
+    // Step 3: Initialize result with first interval
+    result := [][]int{intervals[0]}
+
+    // Step 4: Process each interval
+    for i := 1; i < len(intervals); i++ {
+        current := intervals[i]
+        lastMerged := result[len(result)-1]
+
+        // Step 5: Check for overlap and merge or add
+        if current[0] <= lastMerged[1] {
+            // Overlap detected - merge intervals
+            lastMerged[1] = max(lastMerged[1], current[1])
+        } else {
+            // No overlap - add as new interval
+            result = append(result, current)
+        }
+    }
+
+    return result
+}
+```
+
+**3. Key Concepts:**
+
+- **Overlap Condition**: Two intervals `[a,b]` and `[c,d]` overlap if `c <= b` (the start of the second interval is less than or equal to the end of the first)
+- **Merge Operation**: When overlapping, combine intervals by taking the minimum start time and maximum end time
+- **Sorting Importance**: Sorting by start time ensures we process intervals in chronological order, making the merge process efficient
+
+**4. Step-by-Step Example:**
+
+**Input**: `[[1,3], [2,6], [8,10], [15,18]]`
+
+1. **After Sorting**: `[[1,3], [2,6], [8,10], [15,18]]` (already sorted)
+2. **Initialize**: `result = [[1,3]]`
+3. **Process [2,6]**: Since `2 <= 3`, overlap detected. Merge to `[1,6]`. `result = [[1,6]]`
+4. **Process [8,10]**: Since `8 > 6`, no overlap. Add new interval. `result = [[1,6], [8,10]]`
+5. **Process [15,18]**: Since `15 > 10`, no overlap. Add new interval. `result = [[1,6], [8,10], [15,18]]`
+
+**Output**: `[[1,6], [8,10], [15,18]]`
+
+**5. Time and Space Complexity:**
+- **Time Complexity**: O(n log n) due to sorting, where n is the number of intervals
+- **Space Complexity**: O(n) for the result array in the worst case
+
+**6. Common Use Cases:**
+- Meeting room scheduling
+- Calendar event consolidation
+- Resource allocation optimization
+- Timeline merging in data processing
+
 These algorithms are efficient and reduce the time complexity of problems involving arrays, making them valuable tools in data structures and algorithms.
