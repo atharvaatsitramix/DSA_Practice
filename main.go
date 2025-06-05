@@ -38,4 +38,25 @@ func main() {
 	fmt.Println("\n" + strings.Repeat("=", 50) + "\n")
 
 	DemoMorrisApplications()
+
+	fmt.Println("\n" + strings.Repeat("=", 50) + "\n")
+
+	// Run Trie (Prefix Tree) demonstration
+	DemoTrieBasics()
+
+	fmt.Println("\n" + strings.Repeat("=", 50) + "\n")
+
+	DemoTrieAdvanced()
+
+	fmt.Println("\n" + strings.Repeat("=", 50) + "\n")
+
+	DemoAutoComplete()
+
+	fmt.Println("\n" + strings.Repeat("=", 50) + "\n")
+
+	DemoSpellChecker()
+
+	fmt.Println("\n" + strings.Repeat("=", 50) + "\n")
+
+	DemoTrieComplexity()
 }
